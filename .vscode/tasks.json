@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Temp/Temp.csproj",
+                "${workspaceFolder}/IntroToProgLang/Lesson_005/Lesson_005.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/Temp/Temp.csproj",
+                "${workspaceFolder}/IntroToProgLang/Lesson_005/Lesson_005.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/Temp/Temp.csproj"
+                "${workspaceFolder}/IntroToProgLang/Lesson_005/Lesson_005.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
