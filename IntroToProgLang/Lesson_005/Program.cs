@@ -227,41 +227,132 @@ PrintArray03(array07);
         Console.WriteLine($"{String.Join(",", array)}");
         Console.WriteLine("Задача 37.");
         Console.WriteLine();
-    }
-            
+    }            
     #endregion
 #endregion
 
 #region Домашняя задача 34
 // Задайте массив заполненный случайными положительными трехзначными числами. Напишите программу, которая покажет количество четных
 // чисел в массиве. Например: [345, 897, 568, 234] -> 2
+int[] userArray01 = CreateArrayWithThreeDigitNum("Задайте диапазон массива: ", "Ошибка! Укажите целое число.");
+int amountEvenNum = FoundEvenNumbersInArray(userArray01);
+PrintResult03(amountEvenNum, userArray01);
 
     #region Degining Methods
-        
+        int[] CreateArrayWithThreeDigitNum(string userMessage, string errorMsg)
+        {
+            while (true)
+            {
+                Console.Write(userMessage);
+                if(int.TryParse(Console.ReadLine(), out int lengthArray))
+                {
+                    int[] array = new int[lengthArray];
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        array[i] = new Random().Next(100, 1000);
+                    }
+                    return array;
+                }
+                Console.WriteLine(errorMsg);
+            }          
+        }
+        int FoundEvenNumbersInArray(int[] array)
+        {
+            int collectorNumbers = 0;
+            foreach (int element in array)
+            {
+                collectorNumbers += element % 2 == 0 ? 1 : 0;
+            }
+            return collectorNumbers;
+        }
+        void PrintResult03(int amountEvenNum, int[] array) 
+        {
+            Console.WriteLine($"В указанном массиве [{String.Join(",", array)}] четных чисел - {amountEvenNum}");
+        }
     #endregion
 #endregion
 
 #region Домашняя задача 36
 // Задайте одномерный массив, заполненный случайными числами. Найдите сумму элементов, стоящих на нечетных позициях.
 // Например: [3,7,23,12] -> 19
-    
+    int[] userArray02 = NewRandomArray("Введите диапазон массива: ", "Ошибка! Введите целое число!");
+    int sumOdd = CalculateSummOddPushFromIndex(userArray02);
+    PrintResult04(sumOdd, userArray02);
+
     #region Degining Methods
-        
+        int[] NewRandomArray(string userMessage, string errorMsg)
+        {
+            while (true)
+            {
+                Console.Write(userMessage);
+                if(int.TryParse(Console.ReadLine(), out int lengthArray))
+                {
+                    int[] array = new int[lengthArray];
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        array[i] = new Random().Next(1, 20);
+                    }
+                return array;
+                }
+                Console.WriteLine(errorMsg);                
+            }
+        }
+        int CalculateSummOddPushFromIndex(int[] array)
+        {
+            sumOdd = 0;
+            for (int i = 0; i < array.Length; i++)
+            {
+                sumOdd += i % 2 != 0 ? array[i] : 0;
+            }
+            return sumOdd;
+        }
+        void PrintResult04(int sumOdd, int[] array)
+        {
+            Console.WriteLine($"В указанном массиве [{String.Join(",", array)}] сумма элементов находящихся на нечетных индексах равна {sumOdd}");
+        }
     #endregion
 #endregion
 
 #region Домашняя задача 38
-// Задайте массив вещественных чисел. Найдите разницу между максимальным и минимальным элементов массива.
+// Задайте массив вещественных чисел. Найдите разницу между максимальным и минимальным элементами массива.
 // Например: [3,7,22,2,78] -> 76
-    
+    double[] userArray03 = CreateDoubleArray("Задайте длину массива: ", "Ошибка! Введите целое число!");
+    double minDiffMax = FoundDifferenceBetweenMinMaxInArray(userArray03);
+    PrintResult05(minDiffMax, userArray03);
+
     #region Degining Methods
-        
+        double[] CreateDoubleArray(string userMessage, string errorMsg)
+        {
+            while (true)
+            {
+                Console.Write(userMessage);
+                if(int.TryParse(Console.ReadLine(), out int lengthArray))
+                {
+                    double[] array = new double[lengthArray];
+                    var rand = new Random();
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        array[i] = Math.Round(rand.NextDouble() * rand.Next(1,20));
+                    }
+                    return array;
+                }
+                Console.WriteLine(errorMsg);
+            }
+        }
+        double FoundDifferenceBetweenMinMaxInArray(double[] array)
+        {
+            double min = array[0], max = array[0], result = 0;
+            for (int i = 1; i < array.Length; i++)
+            {
+                if(array[i] > max) max = array[i];
+                if(array[i] < min) min = array[i];
+            }
+            result = max - min;
+            return result;
+        }
+        void PrintResult05(double minDiffMax, double[] array)
+        {
+            Console.WriteLine($"В массиве [{String.Join(",", array)}] разница между максимальным и минимальным значениями = {minDiffMax}");
+        }
     #endregion
-#endregion
-
-#region Задача 
-
-    #region Degining Methods
-    
-    #endregion    
 #endregion
