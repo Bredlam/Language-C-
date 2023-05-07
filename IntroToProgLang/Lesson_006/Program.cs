@@ -8,7 +8,6 @@
 #endregion
 
 // УРОК 6. ЛЕКЦИЯ
-//
 
 // УРОК 6. СЕМИНАР
 #region Задача 39 Преподаватель разобрал задачу
@@ -57,41 +56,41 @@
 #endregion
 
 #region Задача 40
-// // Напишите программу, которая принимает на вход три числа и проверяет, может ли существовать треугольник с сторонами такой длины.
-// // В помощь: теорема о неравенстве треугольника: каждая сторона треугольника меньше суммы двух других сторон.
-// int userNum01 = ControlInputUserNumber("Введите первую сторону: ");
-// int userNum02 = ControlInputUserNumber("Введите вторую сторону: ");
-// int userNum03 = ControlInputUserNumber("Введите третью сторону: ");
-// bool result01 = CalculateExistenceTrigon(userNum01, userNum02, userNum03);
-// PrintPesult01(result01);
+// Напишите программу, которая принимает на вход три числа и проверяет, может ли существовать треугольник с сторонами такой длины.
+// В помощь: теорема о неравенстве треугольника: каждая сторона треугольника меньше суммы двух других сторон.
+int userNum01 = ControlInputUserNumber("Введите первую сторону: ");
+int userNum02 = ControlInputUserNumber("Введите вторую сторону: ");
+int userNum03 = ControlInputUserNumber("Введите третью сторону: ");
+bool result01 = CalculateExistenceTrigon(userNum01, userNum02, userNum03);
+PrintPesult01(result01);
 
-//     #region Degining Methods
-//         int ControlInputUserNumber(string userMessage)
-//         {
-//             while (true)
-//             {
-//                 Console.Write(userMessage);
-//                 if(int.TryParse(Console.ReadLine(), out int angleTrigon))
-//                     return angleTrigon;
-//                 Console.WriteLine("Ошибка! Введите целое число!");
-//             }
-//         }
-//         bool CalculateExistenceTrigon(int angleTrigon01, int angleTrigon02, int angleTrigon03)
-//         {
-//             if(angleTrigon01 < angleTrigon02 + angleTrigon03)
-//             {
-//                 if(angleTrigon02 < angleTrigon01 + angleTrigon03)
-//                 {
-//                     if(angleTrigon03 < angleTrigon01 + angleTrigon02) return true;
-//                 }
-//             }
-//             return false;
-//         }
-//         void PrintPesult01(bool result)
-//         {
-//             Console.WriteLine(result);
-//         }    
-//     #endregion    
+    #region Degining Methods
+        int ControlInputUserNumber(string userMessage)
+        {
+            while (true)
+            {
+                Console.Write(userMessage);
+                if(int.TryParse(Console.ReadLine(), out int angleTrigon))
+                    return angleTrigon;
+                Console.WriteLine("Ошибка! Введите целое число!");
+            }
+        }
+        bool CalculateExistenceTrigon(int angleTrigon01, int angleTrigon02, int angleTrigon03)
+        {
+            if(angleTrigon01 < angleTrigon02 + angleTrigon03)
+            {
+                if(angleTrigon02 < angleTrigon01 + angleTrigon03)
+                {
+                    if(angleTrigon03 < angleTrigon01 + angleTrigon02) return true;
+                }
+            }
+            return false;
+        }
+        void PrintPesult01(bool result)
+        {
+            Console.WriteLine(result);
+        }    
+    #endregion    
 #endregion
 
 #region Задача 42
@@ -113,21 +112,30 @@ PrintResult02(result02);
             }
         }
         string GetBinaryNum(int num)
-        {
-            string temp = String.Empty;
+        {   
+            // блок получает двоичную последовательность но в перевернутом порядке + мы сознательно добавляем 
+            // контрольный начальный знак "1" чтобы можно сделать преобразование в число для дальнейших манипуляций
+            string temp = "1";
             while (num != 0)
             {
-                num /= 2; 
-                temp =+ num % 2 == 0 ? "0" : "1";
-                //string temp02 =+ temp01;
+                temp += num % 2 == 0 ? "0" : "1";
+                num /= 2;
             }
-            return temp;
-
+            
+            // блок переворачивает последовательность убирая контрольную начальную цифру 1
+            int temp01 = int.Parse(temp);
+            string temp02 = String.Empty;
+            while (temp01 > 1)
+            {
+                temp02 += temp01 % 2 == 0 ? "0" : "1";
+                temp01 /= 10;
+            }
+            return temp02;
         }
         void PrintResult02(string num)
         {
-            Console.WriteLine(num);
-        }
+            Console.WriteLine($"Десятичное целое число - {userNum04} преобразовано в двоичное - {num}");
+        }        
     #endregion    
 #endregion
 
@@ -137,9 +145,36 @@ PrintResult02(result02);
 // Если N = 5 -> 0 1 1 2 3
 // Если N = 3 -> 0 1 1
 // Если N = 7 -> 0 1 1 2 3 5 8 
+int lengthArray = ControlUserinput("Введите диапазон Фибаначи: ");
+int[] arrayFibbonachi = CreateArrayFibbonachi(lengthArray);
+PrintResult03(arrayFibbonachi);
 
     #region Degining Methods
-    
+        int ControlUserinput(string userMessage)
+        {
+            while (true)
+            {
+                Console.Write(userMessage);
+                if(int.TryParse(Console.ReadLine(), out int lehgthArray))
+                    return lehgthArray;
+                System.Console.WriteLine("Ошибка! Введите целое число!");
+            }
+        }
+        int[] CreateArrayFibbonachi(int lehgthArray)
+        {
+            int[] array = new int[lehgthArray];
+            array[0] = 0;
+            array[1] = 1;
+            for (int i = 2; i < array.Length; i++)
+            {
+                array[i] = array[i-1] + array[i-2];
+            }
+            return array;
+        }
+        void PrintResult03(int[] array)
+        {
+            Console.WriteLine($"{String.Join(",", array)}");
+        }
     #endregion    
 #endregion
 
