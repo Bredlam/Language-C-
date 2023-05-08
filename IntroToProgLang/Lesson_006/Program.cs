@@ -11,61 +11,64 @@
 
 // УРОК 6. СЕМИНАР
 #region Задача 39 Преподаватель разобрал задачу
-// // Напишите программу, которая перевернет одномерный массив (последний элемент будет на первом месте, а первый на последнем и т.д.)
-// // Например: [1,2,3,4,5] -> [5,4,3,2,1]
-// int[] array = GetArray(10, 0, 10);
-// Console.WriteLine(String.Join(" ", array));
+Console.WriteLine("Задача 39"); 
+// Напишите программу, которая перевернет одномерный массив (последний элемент будет на первом месте, а первый на последнем и т.д.)
+// Например: [1,2,3,4,5] -> [5,4,3,2,1]
+int[] array = GetArray(10, 0, 10);
+Console.WriteLine(String.Join(" ", array));
 
-// int[] reversArray = GetReversArray01(array);
-// Console.WriteLine(string.Join(" ", reversArray));
+int[] reversArray = GetReversArray01(array);
+Console.WriteLine(string.Join(" ", reversArray));
 
-// GetReversArray02(array);
-// Console.WriteLine(string.Join(" ", array));
+GetReversArray02(array);
+Console.WriteLine(string.Join(" ", array));
 
-//     #region Degining Methods
-//         int[] GetArray(int size, int minValue, int maxValue)
-//         {
-//             int[] res = new int[size];
-//             for (int i = 0; i < size; i++)
-//             {
-//                 res[i] = new Random().Next(minValue, maxValue + 1);
-//             }
-//             return res;
-//         }
-//         int[] GetReversArray01(int[] array) // 1-й вариант исполнения создания перевернутого массива. Данный вариант целесообразен
-//                                             // если нам нужно сохранить первоисточник-массив или нам нужна копия
-//         {
-//             int[] result = new int[array.Length];
-//             for (int i = 0; i < array.Length; i++)
-//             {
-//                 result[i] = array[array.Length-1 - i];
-//             }
-//             return result;
-//         }
-//         void GetReversArray02(int[] array)  // 2-й вариант исполнения создания перевернутого массива. Данный вариант целесообразен
-//                                             // если нам не нужно сохранять первоисточник и копия не нужна
-//         {
-//             for (int i = 0; i < array.Length / 2; i++)
-//             {
-//                 int temp = array[i];
-//                 array[i] = array[array.Length-1 - i];
-//                 array[array.Length-1 - i] = temp;
-//             }
-//         }
-//     #endregion    
+    #region Degining Methods
+        int[] GetArray(int size, int minValue, int maxValue)
+        {
+            int[] res = new int[size];
+            for (int i = 0; i < size; i++)
+            {
+                res[i] = new Random().Next(minValue, maxValue + 1);
+            }
+            return res;
+        }
+        int[] GetReversArray01(int[] array) // 1-й вариант исполнения создания перевернутого массива. Данный вариант целесообразен
+                                            // если нам нужно сохранить первоисточник-массив или нам нужна копия
+        {
+            int[] result = new int[array.Length];
+            for (int i = 0; i < array.Length; i++)
+            {
+                result[i] = array[array.Length-1 - i];
+            }
+            return result;
+        }
+        void GetReversArray02(int[] array)  // 2-й вариант исполнения создания перевернутого массива. Данный вариант целесообразен
+                                            // если нам не нужно сохранять первоисточник и копия не нужна
+        {
+            for (int i = 0; i < array.Length / 2; i++)
+            {
+                int temp = array[i];
+                array[i] = array[array.Length-1 - i];
+                array[array.Length-1 - i] = temp;
+            }
+        }
+    #endregion
+    System.Console.WriteLine();
 #endregion
 
 #region Задача 40
+Console.WriteLine("Задача 40"); 
 // Напишите программу, которая принимает на вход три числа и проверяет, может ли существовать треугольник с сторонами такой длины.
 // В помощь: теорема о неравенстве треугольника: каждая сторона треугольника меньше суммы двух других сторон.
-int userNum01 = ControlInputUserNumber("Введите первую сторону: ");
-int userNum02 = ControlInputUserNumber("Введите вторую сторону: ");
-int userNum03 = ControlInputUserNumber("Введите третью сторону: ");
+int userNum01 = ControlInputUserNumber01("Введите первую сторону: ");
+int userNum02 = ControlInputUserNumber01("Введите вторую сторону: ");
+int userNum03 = ControlInputUserNumber01("Введите третью сторону: ");
 bool result01 = CalculateExistenceTrigon(userNum01, userNum02, userNum03);
 PrintPesult01(result01);
 
     #region Degining Methods
-        int ControlInputUserNumber(string userMessage)
+        int ControlInputUserNumber01(string userMessage)
         {
             while (true)
             {
@@ -75,33 +78,34 @@ PrintPesult01(result01);
                 Console.WriteLine("Ошибка! Введите целое число!");
             }
         }
-        bool CalculateExistenceTrigon(int angleTrigon01, int angleTrigon02, int angleTrigon03)
+        bool CalculateExistenceTrigon(int angleTrigon01, int angleTrigon02, int angleTrigon03) // метод проверяет теорему о неравенстве треугольника
         {
-            if(angleTrigon01 < angleTrigon02 + angleTrigon03)
-            {
-                if(angleTrigon02 < angleTrigon01 + angleTrigon03)
-                {
-                    if(angleTrigon03 < angleTrigon01 + angleTrigon02) return true;
-                }
-            }
-            return false;
+            return angleTrigon01 < angleTrigon02 + angleTrigon03 && // можно сразу логические выражения писать с командой возвращения
+                angleTrigon02 < angleTrigon01 + angleTrigon03 &&
+                    angleTrigon03 < angleTrigon01 + angleTrigon02;
+
         }
         void PrintPesult01(bool result)
         {
             Console.WriteLine(result);
         }    
-    #endregion    
+    #endregion
+    System.Console.WriteLine();
 #endregion
 
 #region Задача 42
+Console.WriteLine("Задача 42"); 
 // Напишите программу, которая будет преобразовывать десятичное число в двоичное.
 // Например: 45 -> 101101
-int userNum04 = ControlInputUserNumber("Введите целое число: ");
+int userNum04 = ControlInputUserNumber02("Введите целое число: ");
+
 string result02 = GetBinaryNum(userNum04);
-PrintResult02(result02);
+int num = GetConvert(userNum04);
+
+PrintResult02(result02, num);
 
     #region Degining Methods
-        int ControlInputUserNumber(string userMessage)
+        int ControlInputUserNumber02(string userMessage)
         {
             while (true)
             {
@@ -111,6 +115,7 @@ PrintResult02(result02);
                 Console.WriteLine("Ошибка! Введите целое число!");
             }
         }
+        // Мой "выстраданный" вариант получение двоичного числа из десятичного
         string GetBinaryNum(int num)
         {   
             // блок получает двоичную последовательность но в перевернутом порядке + мы сознательно добавляем 
@@ -120,8 +125,7 @@ PrintResult02(result02);
             {
                 temp += num % 2 == 0 ? "0" : "1";
                 num /= 2;
-            }
-            
+            }            
             // блок переворачивает последовательность убирая контрольную начальную цифру 1
             int temp01 = int.Parse(temp);
             string temp02 = String.Empty;
@@ -132,19 +136,37 @@ PrintResult02(result02);
             }
             return temp02;
         }
-        void PrintResult02(string num)
+        // Вариант более красивый от преподавателя (который знает математику) перевода десятичного числа в двоичное
+        int GetConvert(int num)
         {
-            Console.WriteLine($"Десятичное целое число - {userNum04} преобразовано в двоичное - {num}");
+            int p = 0; // это номер степени
+            int result = 0; // переменная будет накапливать ответ
+            while (num > 0)
+            {
+                result += num % 2 * (int) Math.Pow(10, p); // сделали прямое приведение вещественного числа к целому
+                num /= 2;
+                p ++;
+            }
+            return result;
         }        
-    #endregion    
+        void PrintResult02(string num01 = "None", int num02 = -1) // завел необязательные параметры
+        {
+            if(num01 != "None")
+                Console.WriteLine($"Десятичное целое число - {userNum04} преобразовано в двоичное - {num01}. Мой вариант :))");
+            if(num02 != -1)
+                Console.WriteLine($"Десятичное целое число - {userNum04} преобразовано в двоичное - {num01}. Вариант препода!!!");                
+        }        
+    #endregion
+    System.Console.WriteLine();
 #endregion
 
 #region Задача 44
+Console.WriteLine("Задача 44"); 
 // Не используя рекурсию, выведите первые N чисел Фибонначи. Дано: первые два числа Фибонначи: 0 и 1.
 // Например:
 // Если N = 5 -> 0 1 1 2 3
 // Если N = 3 -> 0 1 1
-// Если N = 7 -> 0 1 1 2 3 5 8 
+// Если N = 7 -> 0 1 1 2 3 5 8
 int lengthArray = ControlUserinput("Введите диапазон Фибаначи: ");
 int[] arrayFibbonachi = CreateArrayFibbonachi(lengthArray);
 PrintResult03(arrayFibbonachi);
@@ -173,30 +195,51 @@ PrintResult03(arrayFibbonachi);
         }
         void PrintResult03(int[] array)
         {
-            Console.WriteLine($"{String.Join(",", array)}");
+            Console.WriteLine($"Числа Фибоначи - {String.Join(",", array)}");                        
         }
-    #endregion    
+    #endregion
+    Console.WriteLine();
 #endregion
 
 #region Задача 45
+Console.WriteLine("Задача 45"); 
 // Напишите программму, которая будет создавать копию заданного массива с помощью поэлементного копирования.
+int[] testArray = {1,6,12,15,22,17,56};
+int[] copyArray = GetCopyOfArray(testArray);
+PrintArray(copyArray);
 
     #region Degining Methods
-    
-    #endregion    
+    int[] GetCopyOfArray(int[] array)
+    {
+        int[] newArray = new int[array.Length];
+        for (int i = 0; i <array.Length; i++)
+        {
+            newArray[i] = array[i];
+        }
+        return newArray;
+    }
+    void PrintArray(int[] array)
+    {
+        Console.WriteLine($"Копия массива - {String.Join(",", array)}");        
+    }
+    #endregion
+    Console.WriteLine();
 #endregion
 
 #region Домашняя задача 41
+Console.WriteLine("Домашняя задача 41"); 
 // Пользователь вводит с клавиатуры M чисел.
 // Посчитайте, сколько чисел больше 0 ввел пользователь.
 // Например: 0,7,8,-2,-2 -> 2
 
     #region Degining Methods
     
-    #endregion    
+    #endregion
+    Console.WriteLine();
 #endregion
 
 #region Домашняя задача 43
+Console.WriteLine("Домашняя задача 43"); 
 // Напишите программу, которая найдет точку пересечения двух прямых, заданных уравнениями:
 // у = к1 * х + b1
 // у = к2 * х + b2
@@ -205,5 +248,6 @@ PrintResult03(arrayFibbonachi);
 
     #region Degining Methods
     
-    #endregion    
+    #endregion
+    Console.WriteLine();
 #endregion
