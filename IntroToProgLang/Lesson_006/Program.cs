@@ -14,14 +14,14 @@
 Console.WriteLine("Задача 39"); 
 // Напишите программу, которая перевернет одномерный массив (последний элемент будет на первом месте, а первый на последнем и т.д.)
 // Например: [1,2,3,4,5] -> [5,4,3,2,1]
-int[] array = GetArray(10, 0, 10);
-Console.WriteLine(String.Join(" ", array));
+int[] array01 = GetArray(10, 0, 10);
+Console.WriteLine(String.Join(" ", array01));
 
-int[] reversArray = GetReversArray01(array);
+int[] reversArray = GetReversArray01(array01);
 Console.WriteLine(string.Join(" ", reversArray));
 
-GetReversArray02(array);
-Console.WriteLine(string.Join(" ", array));
+GetReversArray02(array01);
+Console.WriteLine(string.Join(" ", array01));
 
     #region Degining Methods
         int[] GetArray(int size, int minValue, int maxValue)
@@ -206,7 +206,7 @@ Console.WriteLine("Задача 45");
 // Напишите программму, которая будет создавать копию заданного массива с помощью поэлементного копирования.
 int[] testArray = {1,6,12,15,22,17,56};
 int[] copyArray = GetCopyOfArray(testArray);
-PrintArray(copyArray);
+PrintArray01(copyArray);
 
     #region Degining Methods
     int[] GetCopyOfArray(int[] array)
@@ -218,7 +218,7 @@ PrintArray(copyArray);
         }
         return newArray;
     }
-    void PrintArray(int[] array)
+    void PrintArray01(int[] array)
     {
         Console.WriteLine($"Копия массива - {String.Join(",", array)}");        
     }
@@ -231,9 +231,42 @@ Console.WriteLine("Домашняя задача 41");
 // Пользователь вводит с клавиатуры M чисел.
 // Посчитайте, сколько чисел больше 0 ввел пользователь.
 // Например: 0,7,8,-2,-2 -> 2
+int length = Prompt01("Введите количество элементов > ");
+int[] array02 = InputArray(length);
+PrintArray02(array02);
+Console.WriteLine($"Количество чисел больше 0 - {CountPositiveNumbers(array02)}");
 
     #region Degining Methods
-    
+    int Prompt01(string message)
+    {
+        Console.Write(message);
+        string value = Console.ReadLine() ?? "";
+        int result = Convert.ToInt32(value);
+        return result;
+    }
+    int[] InputArray(int length)
+    {
+        int[] array = new int[length];
+        for (int i = 0; i < array.Length; i++)
+        {
+            array[i] = Prompt01($"Введите {i + 1}-й элемент > ");
+        }
+        return array;
+    }
+    void PrintArray02(int[] array)
+    {
+        Console.WriteLine($"Получившийся массив - [{String.Join(",", array)}]");
+    }
+    int CountPositiveNumbers(int[] array)
+    {
+        int count = 0;
+        for (int i = 0; i < array.Length; i++)
+        {
+            if(array[i] > 0)
+                count++;
+        }
+        return count;
+    }
     #endregion
     Console.WriteLine();
 #endregion
@@ -245,9 +278,65 @@ Console.WriteLine("Домашняя задача 43");
 // у = к2 * х + b2
 // Значения k1 b1 k2 b2 задаются пользователем
 // Например: k1=5 b1=2 k2=9 b2=4 -> (-0,5; -0,5)
+const int COEFFICIENT = 0;
+const int CONSTANT = 1;
+const int X_COORD = 0;
+const int Y_COORD = 1;
+const int LINE1 = 1;
+const int LINE2 = 2;
+
+double[] lineData1 = InputLineData(LINE1);
+double[] lineData2 = InputLineData(LINE2);
+
+if(ValidateLines(lineData1, lineData2))
+{
+    double[] coord = FindCoords(lineData1, lineData2);
+    Console.Write($"Точка пересечений уравнений у={lineData1[COEFFICIENT]} * x + {lineData1[CONSTANT]} и у={lineData2[COEFFICIENT]} * x + {lineData2[CONSTANT]} ");
+    Console.WriteLine($" имеет координаты ({coord[X_COORD]},{coord[Y_COORD]})");}
 
     #region Degining Methods
-    
+    // Ввод числа
+    double Prompt02(string message)
+    {
+        Console.Write(message);
+        string value = Console.ReadLine() ?? "";
+        double result = Convert.ToDouble(value); // преобразуем строку в вещественное число
+        return result;
+    }
+    // Ввод данных по прямой
+    double[] InputLineData(int numberOfLine)
+    {
+        double[] lineData =new double[2];
+        lineData[COEFFICIENT] = Prompt02($"Введите коэффициен для {numberOfLine} прямой > ");
+        lineData[CONSTANT] = Prompt02($"Введите константу для {numberOfLine} прямой > ");
+        return lineData;
+    }
     #endregion
+    // Поиск координат
+    double[] FindCoords(double[] lineData1, double[] lineData2)
+    {
+        double[] coord = new double[2];
+        coord[X_COORD] =    (lineData1[CONSTANT] - lineData2[CONSTANT]) / 
+                            (lineData2[COEFFICIENT] - lineData1[COEFFICIENT]);
+        coord[Y_COORD] = lineData1[CONSTANT] * coord[X_COORD] + lineData1[CONSTANT];
+        return coord;
+    }
+    bool ValidateLines(double[] lineData1, double[] lineData2)
+    {
+        if(lineData1[COEFFICIENT] == lineData2[COEFFICIENT])
+        {
+            if(lineData1[CONSTANT] == lineData2[CONSTANT])
+            {
+                Console.WriteLine("Прямые совпадают");
+                return false;
+            }
+            else
+            {
+                Console.WriteLine("Прямые параллельны");
+                return false;
+            }
+        }
+        return true;
+    }
     Console.WriteLine();
 #endregion
