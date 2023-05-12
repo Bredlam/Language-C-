@@ -332,7 +332,8 @@ PrintResult03(amountEvenNum, userArray01);
                     var rand = new Random();
                     for (int i = 0; i < array.Length; i++)
                     {
-                        array[i] = Math.Round(rand.NextDouble() * rand.Next(1,20));
+                        array[i] = Math.Round(rand.NextDouble() * rand.Next(1,20)); // Используются методы рандома для дробных чисел и для
+                                                                                    // целых чисел, также используется метод округления
                     }
                     return array;
                 }

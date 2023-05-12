@@ -1,44 +1,54 @@
-﻿Console.Clear();
-#region Домашняя задача 34
-// Задайте массив заполненный случайными положительными трехзначными числами. Напишите программу, которая покажет количество четных
-// чисел в массиве. Например: [345, 897, 568, 234] -> 2
-
-int[] userArray = CreateArrayWithThreeDigitNum("Задайте диапазон массива: ", "Ошибка! Укажите целое число.");
-
-int amountEvenNum = FoundEvenNumbersInArray(userArray);
-
-PrintResult(amountEvenNum, userArray);
+﻿#region Домашняя задача 47
+Console.WriteLine("Задача 47");
+// Задайте двумерный массив размера m*n, заполненный случайными вещественными числами
+int rows01 = GetParameters01("Введите количество строк массива: ","Ошибка!");
+int colums01 = GetParameters01("Введите количество столцов массива: ","Ошибка!");
+double[,] arrayTD01 = CreateTwoDimensionalDoubleArray(rows01, colums01);
+arrayTD01 = FillArrayTDRandomDoubleNum(arrayTD01, 0, 10);
+PrintDoubleArrayTD(arrayTD01);
 
     #region Degining Methods
-        int[] CreateArrayWithThreeDigitNum(string userMessage, string errorMsg)
+        int GetParameters01(string userMsg, string errorMsg)
         {
             while (true)
             {
-                Console.Write(userMessage);
-                if(int.TryParse(Console.ReadLine(), out int lengthArray))
-                {
-                    int[] array = new int[lengthArray];
-                    for (int i = 0; i < array.Length; i++)
-                    {
-                        array[i] = new Random().Next(100, 1000);
-                    }
-                    return array;
-                }
+                Console.Write(userMsg);
+                if(int.TryParse(Console.ReadLine(), out int userPam))
+                    return userPam;
                 Console.WriteLine(errorMsg);
-            }          
-        }
-        int FoundEvenNumbersInArray(int[] array)
-        {
-            int collectorNumbers = 0;
-            foreach (int element in array)
-            {
-                collectorNumbers += element % 2 == 0 ? 1 : 0;
             }
-            return collectorNumbers;
         }
-        void PrintResult(int amountEvenNum, int[] array) 
+        double[,] CreateTwoDimensionalDoubleArray(int rows, int colums)
         {
-            Console.WriteLine($"В указанном массиве [{String.Join(",", array)}] четных чисел - {amountEvenNum}");
+            double[,] arrayTD = new double[rows, colums];
+            return arrayTD;
+        }
+        double[,] FillArrayTDRandomDoubleNum(double[,] arrayTD, int minValue, int maxValue)
+        {   
+            var rand = new Random();
+            for (int i = 0; i < arrayTD.GetLength(0); i++) // метод .GetLength(0) определяющий движение цикла по строке двумерного массива
+            {
+                for (int j = 0; j < arrayTD.GetLength(1); j++) // метод .GetLength(1) определяющий движение цикла по колонке двумерного массива
+                {
+                    arrayTD[i,j] = Math.Round((rand.NextDouble() * rand.Next(minValue,maxValue + 1)), 1); // Используются методы рандома для дробных чисел и для
+                                                                                                     // целых чисел, также используется метод округления, в данном
+                                                                                                     // случае указано округлять до 1 знака дроби 
+                }
+            }
+            return arrayTD;
+        }
+        void PrintDoubleArrayTD(double[,] arrayTD)
+        {
+            for (int i = 0; i < arrayTD.GetLength(0); i++)
+            {
+                for (int j = 0; j < arrayTD.GetLength(1); j++)
+                {
+                    //Console.Write($" {arrayTD[i,j]}");
+                    Console.Write(String.Format("{0,3} | ", arrayTD[i,j]));
+                }
+                Console.WriteLine();
+            }
         }
     #endregion
+Console.WriteLine();
 #endregion

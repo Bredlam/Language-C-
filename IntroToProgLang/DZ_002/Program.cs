@@ -1,40 +1,68 @@
-﻿#region Домашняя задача 36
-// Задайте одномерный массив, заполненный случайными числами. Найдите сумму элементов, стоящих на нечетных позициях.
-// Например: [3,7,23,12] -> 19
-    int[] userArray = NewRandomArray("Введите диапазон массива: ", "Ошибка! Введите целое число!");
-    int sumOdd = CalculateSummOddPushFromIndex(userArray);
-    PrintResult(sumOdd, userArray);
+﻿#region Домашняя Задача 50
+Console.WriteLine("Задача 50");
+// Напишите программу, которая на вход принимает позиции элемента в двумерном массиве, и возвращает значение этого
+// элемента или же указание, что такого элемента нет.
+int count = GetParameters02("Введите значение максимального количества строк и столбцов в массиве -> ", "Ошибка!");
+int[,] arrayTD02 = GetRandomArray(count);
+PrintArrayTD03(arrayTD02);
+int row = GetParameters02("Введите номер искомой строки -> ", "Ошибка!");
+int colum = GetParameters02("Введите номер искомого стобца -> ", "Ошибка!");
+FindNumInArray(arrayTD02, row, colum);
 
     #region Degining Methods
-        int[] NewRandomArray(string userMessage, string errorMsg)
+        int GetParameters02(string userMsg, string errorMsg)
         {
             while (true)
             {
-                Console.Write(userMessage);
-                if(int.TryParse(Console.ReadLine(), out int lengthArray))
-                {
-                    int[] array = new int[lengthArray];
-                    for (int i = 0; i < array.Length; i++)
-                    {
-                        array[i] = new Random().Next(1, 20);
-                    }
-                return array;
-                }
-                Console.WriteLine(errorMsg);                
+                Console.Write(userMsg);
+                if(int.TryParse(Console.ReadLine(), out int userPam))
+                    return userPam;
+                Console.WriteLine(errorMsg);
             }
         }
-        int CalculateSummOddPushFromIndex(int[] array)
+        int[,] GetRandomArray(int count)
         {
-            sumOdd = 0;
-            for (int i = 0; i < array.Length; i++)
+            var rnm = new Random();
+            int[,] arrayTD = new int[rnm.Next(1,count+1),rnm.Next(1,count+1)];
+            for (int i = 0; i < arrayTD.GetLength(0); i++)
             {
-                sumOdd += i % 2 != 0 ? array[i] : 0;
+                for (int j = 0; j < arrayTD.GetLength(1); j++)
+                {
+                    arrayTD[i,j] = rnm.Next(0,count+1);
+                }                
             }
-            return sumOdd;
+            return arrayTD;
         }
-        void PrintResult(int sumOdd, int[] array)
+        void PrintArrayTD03(int[,] arrayTD)
         {
-            Console.WriteLine($"В указанном массиве [{String.Join(",", array)}] сумма элементов находящихся на нечетных индексах равна {sumOdd}");
+            for (int i = 0; i < arrayTD.GetLength(0); i++)
+            {
+                for (int j = 0; j < arrayTD.GetLength(1); j++)
+                {                    
+                    Console.Write(String.Format("{0,3} | ", arrayTD[i,j]));
+                }
+                Console.WriteLine();
+            }
+        }
+        void FindNumInArray(int[,] arrayTD, int row, int colum)
+        {
+            int count = 0;
+            if(row < arrayTD.GetLength(0) && colum < arrayTD.GetLength(1))
+            {
+                for (int i = 0; i < arrayTD.GetLength(0); i++)
+                {
+                    for (int j = 0; j < arrayTD.GetLength(1); j++)
+                    {
+                        count = arrayTD[row, colum];
+                    }
+                }
+            Console.WriteLine($"Значение элемента по адресу [{row},{colum}] = {count}");
+            }
+            else
+            {
+                Console.WriteLine($"Значение элемента по адресу [{row},{colum}] отсутствует т.к. адрес выходит за пределы массива");
+            }
         }
     #endregion
+Console.WriteLine();
 #endregion

@@ -1,43 +1,64 @@
-﻿#region Домашняя задача 38
-// Задайте массив вещественных чисел. Найдите разницу между максимальным и минимальным элементами массива.
-// Например: [3,7,22,2,78] -> 76
-    double[] userArray = CreateDoubleArray("Задайте длину массива: ", "Ошибка! Введите целое число!");
-    double minDiffMax = FoundDifferenceBetweenMinMaxInArray(userArray);
-    PrintResult(minDiffMax, userArray);
+﻿#region Домашняя Задача 52
+Console.WriteLine("Задача 52");
+// // Задайте двумерный массив из целых чисел. Найдите среднее арифметическое элементов в каждом столбце.
+int rows03 = GetParameters03("Введите количество строк массива: ","Ошибка!");
+int colums03 = GetParameters03("Введите количество столбцов массива: ", "Ошибка!");
+int[,] arrayTD03 = CreateTwoDimensionalArray02(rows03, colums03, 0, 10);
+PrintArrayTD02(arrayTD03);
+double[] result = GetAverageInColumsArray(arrayTD03);
+PrintArray(result, colums03);
 
     #region Degining Methods
-        double[] CreateDoubleArray(string userMessage, string errorMsg)
+        int GetParameters03(string userMsg, string errorMsg)
         {
             while (true)
             {
-                Console.Write(userMessage);
-                if(int.TryParse(Console.ReadLine(), out int lengthArray))
-                {
-                    double[] array = new double[lengthArray];
-                    var rand = new Random();
-                    for (int i = 0; i < array.Length; i++)
-                    {
-                        array[i] = Math.Round(rand.NextDouble() * rand.Next(1,20));
-                    }
-                    return array;
-                }
+                Console.Write(userMsg);
+                if(int.TryParse(Console.ReadLine(), out int userPam))
+                    return userPam;
                 Console.WriteLine(errorMsg);
             }
         }
-        double FoundDifferenceBetweenMinMaxInArray(double[] array)
+        int[,] CreateTwoDimensionalArray02(int rows, int colums, int minValue, int maxValue)
         {
-            double min = array[0], max = array[0], result = 0;
-            for (int i = 1; i < array.Length; i++)
+            int[,] arrayTD = new int[rows, colums];
+            for (int i = 0; i < arrayTD.GetLength(0); i++) // метод .GetLength(0) определяющий движение цикла по строке двумерного массива
             {
-                if(array[i] > max) max = array[i];
-                if(array[i] < min) min = array[i];
+                for (int j = 0; j < arrayTD.GetLength(1); j++) // метод .GetLength(1) определяющий движение цикла по колонке двумерного массива
+                {
+                    arrayTD[i,j] = new Random().Next(minValue, maxValue + 1);                    
+                }                
             }
-            result = max - min;
+            return arrayTD;
+        }
+        double[] GetAverageInColumsArray(int[,] arrayTD)
+        {
+            double[] result = new double[arrayTD.GetLength(1)];
+            for (int i = 0; i < arrayTD.GetLength(1); i++)
+            {
+                for (int j = 0; j < arrayTD.GetLength(0); j++)
+                {
+                    result[i] += arrayTD[j,i];
+                }                
+                result[i] = Math.Round(result[i] / arrayTD.GetLength(0), 1);
+            }
             return result;
         }
-        void PrintResult(double minDiffMax, double[] array)
+        void PrintArrayTD02(int[,] arrayTD)
         {
-            Console.WriteLine($"В массиве [{String.Join(",", array)}] разница между максимальным и минимальным значениями = {minDiffMax}");
+            for (int i = 0; i < arrayTD.GetLength(0); i++)
+            {
+                for (int j = 0; j < arrayTD.GetLength(1); j++)
+                {
+                    Console.Write(String.Format("{0,3} | ", arrayTD[i,j])); // String.Format позволяет "красиво" вывести значения массива                    
+                }
+                Console.WriteLine();
+            }
         }
+        void PrintArray(double[] array, int colums)
+        {
+        Console.Write($" Среднее арифметическое по {colums} колонкам = [{String.Join(" | ", array)}]");            
+        }        
     #endregion
+Console.WriteLine();
 #endregion
