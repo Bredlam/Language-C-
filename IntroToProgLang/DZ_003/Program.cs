@@ -1,64 +1,63 @@
-﻿#region Домашняя Задача 52
-Console.WriteLine("Задача 52");
-// // Задайте двумерный массив из целых чисел. Найдите среднее арифметическое элементов в каждом столбце.
-int rows03 = GetParameters03("Введите количество строк массива: ","Ошибка!");
-int colums03 = GetParameters03("Введите количество столбцов массива: ", "Ошибка!");
-int[,] arrayTD03 = CreateTwoDimensionalArray02(rows03, colums03, 0, 10);
-PrintArrayTD02(arrayTD03);
-double[] result = GetAverageInColumsArray(arrayTD03);
-PrintArray(result, colums03);
+﻿Console.WriteLine("Домашняя задача № 58");
+// Задайте две матрицы. Напишите программу, которая будет находить произведение двух матриц
+// Матричное произведение. Каждый элемент результирующей матрицы равен сумме произведений элементов исходных матриц
+int [,] firstMatrix = GetMatrixFromConsole("1-й матрицы", 1, 9);
+int [,] secondMatrix = GetMatrixFromConsole("2-й матрицы", 1, 9);
+int [,] resultMatrix  = GetProductUsersMatrix(firstMatrix, secondMatrix);
+PrintArray04(firstMatrix);
+PrintArray04(secondMatrix);
+PrintArray04(resultMatrix);
 
     #region Degining Methods
-        int GetParameters03(string userMsg, string errorMsg)
+        int[,] GetMatrixFromConsole(string name, int minValue, int maxValue)
         {
-            while (true)
+            Console.Write($"Количество строк матрицы {name} -> ");
+            int n = int.Parse(Console.ReadLine() ?? "");
+            Console.Write($"Количество столбцов матрицы {name} -> ");
+            int m = int.Parse(Console.ReadLine() ?? "");
+    
+            var matrix = new int[n, m];
+            for (var i = 0; i < n; i++)
             {
-                Console.Write(userMsg);
-                if(int.TryParse(Console.ReadLine(), out int userPam))
-                    return userPam;
-                Console.WriteLine(errorMsg);
+                for (var j = 0; j < m; j++)
+                {                
+                    matrix[i, j] = new Random().Next(minValue, maxValue + 1);
+                }
             }
+    
+            return matrix;
         }
-        int[,] CreateTwoDimensionalArray02(int rows, int colums, int minValue, int maxValue)
+        int[,] GetProductUsersMatrix(int[,] array01, int[,] array02)
         {
-            int[,] arrayTD = new int[rows, colums];
-            for (int i = 0; i < arrayTD.GetLength(0); i++) // метод .GetLength(0) определяющий движение цикла по строке двумерного массива
+            if(array01.GetLength(1) != array02.GetLength(0))
             {
-                for (int j = 0; j < arrayTD.GetLength(1); j++) // метод .GetLength(1) определяющий движение цикла по колонке двумерного массива
+                throw new Exception("Умножение не возможно. Число столбцов матрицы 1 не совпадает с числом строк матрицы 2");
+                
+            }
+            int[,] resArray = new int[array01.GetLength(0), array02.GetLength(1)];
+            for (int i = 0; i < array01.GetLength(0); i++)
+            {
+                for (int j = 0; j < array02.GetLength(1); j++)
                 {
-                    arrayTD[i,j] = new Random().Next(minValue, maxValue + 1);                    
+                    resArray[i,j] = 0;
+                    for (int q = 0; q < array01.GetLength(1); q++)
+                    {
+                        resArray[i,j] += array01[i,q] * array02[q,j];
+                    }
                 }                
             }
-            return arrayTD;
+            return resArray;
         }
-        double[] GetAverageInColumsArray(int[,] arrayTD)
-        {
-            double[] result = new double[arrayTD.GetLength(1)];
-            for (int i = 0; i < arrayTD.GetLength(1); i++)
-            {
-                for (int j = 0; j < arrayTD.GetLength(0); j++)
-                {
-                    result[i] += arrayTD[j,i];
-                }                
-                result[i] = Math.Round(result[i] / arrayTD.GetLength(0), 1);
-            }
-            return result;
-        }
-        void PrintArrayTD02(int[,] arrayTD)
+        void PrintArray04(int[,] arrayTD)
         {
             for (int i = 0; i < arrayTD.GetLength(0); i++)
-            {
+            {                
                 for (int j = 0; j < arrayTD.GetLength(1); j++)
                 {
-                    Console.Write(String.Format("{0,3} | ", arrayTD[i,j])); // String.Format позволяет "красиво" вывести значения массива                    
+                    Console.Write(String.Format("{0,3}", arrayTD[i,j]));
                 }
-                Console.WriteLine();
+                Console.WriteLine();            
             }
+            Console.WriteLine();
         }
-        void PrintArray(double[] array, int colums)
-        {
-        Console.Write($" Среднее арифметическое по {colums} колонкам = [{String.Join(" | ", array)}]");            
-        }        
     #endregion
-Console.WriteLine();
-#endregion

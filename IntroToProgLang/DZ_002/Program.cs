@@ -1,68 +1,64 @@
-﻿#region Домашняя Задача 50
-Console.WriteLine("Задача 50");
-// Напишите программу, которая на вход принимает позиции элемента в двумерном массиве, и возвращает значение этого
-// элемента или же указание, что такого элемента нет.
-int count = GetParameters02("Введите значение максимального количества строк и столбцов в массиве -> ", "Ошибка!");
-int[,] arrayTD02 = GetRandomArray(count);
-PrintArrayTD03(arrayTD02);
-int row = GetParameters02("Введите номер искомой строки -> ", "Ошибка!");
-int colum = GetParameters02("Введите номер искомого стобца -> ", "Ошибка!");
-FindNumInArray(arrayTD02, row, colum);
+﻿Console.WriteLine("Домашняя задача № 56");
+// Задайте прямоугольный двумерный массив. Напишите программу, которая будет находить строку с наименьшей суммой элементов.
+int userNum = GetParameters02("Введите число которое определит количество строк и столбцов в массиве -> ","Ошибка ввода! ");
+int[,] arrayTD02 = CreateRandomArray02(userNum, 1, 9);
+int[] columSum = FindColumSummArray(arrayTD02);
+int resColum = FindColumMinSum(columSum);
+PrintArray02(arrayTD02, columSum);
+Console.WriteLine($"Строка {resColum} с минимальной суммой");
 
     #region Degining Methods
-        int GetParameters02(string userMsg, string errorMsg)
+        int GetParameters02(string userMessage, string errorMsg)
         {
             while (true)
             {
-                Console.Write(userMsg);
-                if(int.TryParse(Console.ReadLine(), out int userPam))
-                    return userPam;
+                Console.Write(userMessage);
+                if(int.TryParse(Console.ReadLine(), out int usr)) 
+                    return usr;
                 Console.WriteLine(errorMsg);
             }
         }
-        int[,] GetRandomArray(int count)
+        int[,] CreateRandomArray02(int num, int minValue, int maxValue)
         {
-            var rnm = new Random();
-            int[,] arrayTD = new int[rnm.Next(1,count+1),rnm.Next(1,count+1)];
+            var rnd = new Random();
+            int[,] array = new int[num, num];
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    array[i,j] = rnd.Next(minValue, maxValue + 1);
+                }
+            }
+            return array;
+        }
+        int[] FindColumSummArray(int[,] array)
+        {
+            int[] columsSumArray = new int [array.GetLength(0)];            
+            for (int i = 0; i < array.GetLength(0); i++)
+            {                
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    columsSumArray[i] += array[i,j];
+                }                     
+            }            
+            return columsSumArray;
+        }
+        int FindColumMinSum(int[] array)
+        {
+            int colum = Array.IndexOf(array, array.Min());
+            return colum;
+        }
+        void PrintArray02(int[,] arrayTD, int[] array)
+        {
             for (int i = 0; i < arrayTD.GetLength(0); i++)
             {
+                Console.Write($"{i}: sum {array[i]} <--");
                 for (int j = 0; j < arrayTD.GetLength(1); j++)
                 {
-                    arrayTD[i,j] = rnm.Next(0,count+1);
-                }                
-            }
-            return arrayTD;
-        }
-        void PrintArrayTD03(int[,] arrayTD)
-        {
-            for (int i = 0; i < arrayTD.GetLength(0); i++)
-            {
-                for (int j = 0; j < arrayTD.GetLength(1); j++)
-                {                    
-                    Console.Write(String.Format("{0,3} | ", arrayTD[i,j]));
+                    Console.Write(String.Format("{0,3}", arrayTD[i,j]));
                 }
-                Console.WriteLine();
+                Console.WriteLine();            
             }
-        }
-        void FindNumInArray(int[,] arrayTD, int row, int colum)
-        {
-            int count = 0;
-            if(row < arrayTD.GetLength(0) && colum < arrayTD.GetLength(1))
-            {
-                for (int i = 0; i < arrayTD.GetLength(0); i++)
-                {
-                    for (int j = 0; j < arrayTD.GetLength(1); j++)
-                    {
-                        count = arrayTD[row, colum];
-                    }
-                }
-            Console.WriteLine($"Значение элемента по адресу [{row},{colum}] = {count}");
-            }
-            else
-            {
-                Console.WriteLine($"Значение элемента по адресу [{row},{colum}] отсутствует т.к. адрес выходит за пределы массива");
-            }
+            Console.WriteLine();
         }
     #endregion
-Console.WriteLine();
-#endregion
